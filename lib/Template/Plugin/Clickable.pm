@@ -2,7 +2,7 @@ package Template::Plugin::Clickable;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = 0.04;
+$VERSION = 0.05;
 
 require Template::Plugin;
 use base qw(Template::Plugin);
@@ -95,9 +95,34 @@ this will become:
 
 =head1 NOTE
 
-If you use this module with C<html> filter, you should set this
-C<clickable> module B<after> the C<html> filter. Otherwise links will
-be also escaped and thus broken.
+If you use this module with C<html> filter, you should be careful not
+to break tags or brackets around the URLs. For example if you have a
+following URL form,
+
+  <http://www.example.com/>
+
+Clickable plugin will filter this into:
+
+  <a href="http://www.example.com/"><http://www.example.com/></a>
+
+which is bad for HTML viewing. However, if you HTML filter them first
+and then clickable filter, you'll get:
+
+  &lt;<a href="http://www.example.com/&gt">http://www.example.com/&gt</a>;
+
+which href part is wrong.
+
+You'd better try L<Template::Plugin::TagRescue> in this case.
+
+  [% USE Clickable -%]
+  [% USE TagRescue -%]
+  [% FILTER html_except_for('a') -%]
+  [% FILTER clickable -%]
+  <http://www.example.com/>
+  [%- END %]
+  [%- END %]
+
+will give you the right format.
 
 =head1 AUTHOR
 
@@ -108,6 +133,6 @@ it under the same terms as Perl itself.
 
 =head1 SEE ALSO
 
-L<Template>, L<URI::Find>
+L<Template>, L<URI::Find>, L<Template::Plugin::TagRescue>
 
 =cut

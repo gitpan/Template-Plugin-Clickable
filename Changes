@@ -1,7 +1,11 @@
 Revision history for Perl extension Template::Plugin::Clickable
 
+0.05  Fri Dec 24 04:08:14 JST 2004
+	- Added reference to TagRescue in POD
+	  (Stephen Quinney, Satoshi Tanimoto)
+
 0.04  Wed Nov 12 02:24:56 JST 2003
-	* Added filter_class option, thanks to Tony Bowden
+	* Added finder_class option, thanks to Tony Bowden
 
 0.03  Thu Nov 14 18:49:15 JST 2002
 	* Fixed memory leak due to Template::Plugin::Filter
