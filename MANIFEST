@@ -5,3 +5,4 @@ README
 lib/Template/Plugin/Clickable.pm
 t/00_compile.t
 t/01_clickable.t
+META.yml                                 Module meta-data (added by MakeMaker)

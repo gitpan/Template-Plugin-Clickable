@@ -5,6 +5,7 @@ WriteMakefile(
     'PREREQ_PM' => {
 	'Test::More' => 0.32,
 	'Template'   => 2.07,
-	'URI::Find'  => 0.12,
+	'URI::Find'  => 0.13,
+	'UNIVERSAL::require' => 0,
     },
 );

@@ -2,7 +2,7 @@ package Template::Plugin::Clickable;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = 0.03;
+$VERSION = 0.04;
 
 require Template::Plugin;
 use base qw(Template::Plugin);
@@ -10,7 +10,7 @@ use base qw(Template::Plugin);
 use vars qw($FILTER_NAME);
 $FILTER_NAME = 'clickable';
 
-use URI::Find;
+use UNIVERSAL::require;
 
 sub new {
     my($class, $context, @args) = @_;
@@ -26,7 +26,9 @@ sub filter_factory {
 	my $config = ref $args[-1] eq 'HASH' ? pop(@args) : { };
 	return sub {
 	    my $text = shift;
-	    my $finder = URI::Find->new(
+	    my $finder_class = $config->{finder_class} || 'URI::Find';
+	    $finder_class->require or die $UNIVERSAL::require::ERROR;
+	    my $finder = $finder_class->new(
 		sub {
 		    my($uri, $orig_uri) = @_;
 		    my $target = $config->{target} ? qq( target="$config->{target}") : '';
@@ -39,7 +41,6 @@ sub filter_factory {
     };
     return [ $sub, 1 ];
 }
-
 
 1;
 __END__
@@ -76,6 +77,19 @@ filter HTMLs clickable.
 
 C<target> option enables you to set target attribute in A links. none
 by default.
+
+=item finder_class
+
+C<finder_class> option enables you to set other URI finder class
+rather than URI::Find (default). For example,
+
+  [% FILTER clickable finder_class => 'URI::Find::Schemeless' %]
+  Visit www.example.com/join right now!
+  [% END %]
+
+this will become:
+
+  Visit <a href="http://www.example.com/join">www.example.com/join</a> right now!
 
 =back
 

@@ -24,6 +24,18 @@ OPTIONS
         "target" option enables you to set target attribute in A links. none
         by default.
 
+    finder_class
+        "finder_class" option enables you to set other URI finder class
+        rather than URI::Find (default). For example,
+
+          [% FILTER clickable finder_class => 'URU::Find::Schemeless' %]
+          Visit www.example.com/join right now!
+          [% END %]
+
+        this will become:
+
+          Visit <a href="http://www.example.com/join">www.example.com/join</a> right now!
+
 NOTE
     If you use this module with "html" filter, you should set this
     "clickable" module after the "html" filter. Otherwise links will be also
@@ -36,5 +48,5 @@ AUTHOR
     under the same terms as Perl itself.
 
 SEE ALSO
-    the Template manpage, the URI::Find manpage
+    Template, URI::Find
 

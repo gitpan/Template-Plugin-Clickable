@@ -1,5 +1,8 @@
 Revision history for Perl extension Template::Plugin::Clickable
 
+0.04  Wed Nov 12 02:24:56 JST 2003
+	* Added filter_class option, thanks to Tony Bowden
+
 0.03  Thu Nov 14 18:49:15 JST 2002
 	* Fixed memory leak due to Template::Plugin::Filter
 
