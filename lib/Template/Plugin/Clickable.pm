@@ -2,37 +2,44 @@ package Template::Plugin::Clickable;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = 0.02;
+$VERSION = 0.03;
 
-require Template::Plugin::Filter;
-use base qw(Template::Plugin::Filter);
+require Template::Plugin;
+use base qw(Template::Plugin);
 
-use vars qw($DYNAMIC $FILTER_NAME);
-$DYNAMIC = 1;
+use vars qw($FILTER_NAME);
 $FILTER_NAME = 'clickable';
 
 use URI::Find;
 
-sub init {
-    my $self = shift;
-    my $name = $self->{_ARGS}->[0] || $FILTER_NAME;
-    $self->install_filter($name);
-    return $self;
+sub new {
+    my($class, $context, @args) = @_;
+    my $name = $args[0] || $FILTER_NAME;
+    $context->define_filter($name, $class->filter_factory());
+    bless { }, $class;
 }
 
-sub filter {
-    my($self, $text, $args, $config) = @_;
-
-    my $finder = URI::Find->new(
-	sub {
-	    my($uri, $orig_uri) = @_;
-	    my $target = $config->{target} ? qq( target="$config->{target}") : '';
-	    return qq(<a href="$uri"$target>$orig_uri</a>);
-	},
-    );
-    $finder->find(\$text);
-    return $text;
+sub filter_factory {
+    my $class = shift;
+    my $sub = sub {
+	my($context, @args) = @_;
+	my $config = ref $args[-1] eq 'HASH' ? pop(@args) : { };
+	return sub {
+	    my $text = shift;
+	    my $finder = URI::Find->new(
+		sub {
+		    my($uri, $orig_uri) = @_;
+		    my $target = $config->{target} ? qq( target="$config->{target}") : '';
+		    return qq(<a href="$uri"$target>$orig_uri</a>);
+		},
+	    );
+	    $finder->find(\$text);
+	    return $text;
+	};
+    };
+    return [ $sub, 1 ];
 }
+
 
 1;
 __END__
