@@ -1,0 +1,26 @@
+NAME
+    Template::Plugin::Clickable - Make URLs clickable in HTML
+
+SYNOPSIS
+      [% USE Clickable %]
+      [% FILTER clickable %]
+      URL is http://www.template-toolkit.org/
+      [% END %]
+
+    this will become:
+
+      URL is <a href="http://www.template-toolkit.org/">http://www.template-toolkit.org/</a>
+
+DESCRIPTION
+    Template::Plugin::Clickable is a plugin for TT, which allows your to
+    filter HTMLs clickable.
+
+AUTHOR
+    Tatsuhiko Miyagawa <miyagawa@bulknews.net>
+
+    This library is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
+SEE ALSO
+    the Template manpage, the URI::Find manpage
+
