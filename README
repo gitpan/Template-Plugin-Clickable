@@ -4,16 +4,30 @@ NAME
 SYNOPSIS
       [% USE Clickable %]
       [% FILTER clickable %]
-      URL is http://www.template-toolkit.org/
+      URL is http://www.tt2.org/
       [% END %]
 
     this will become:
 
-      URL is <a href="http://www.template-toolkit.org/">http://www.template-toolkit.org/</a>
+      URL is <a href="http://www.tt2.org/">http://www.tt2.org/</a>
 
 DESCRIPTION
-    Template::Plugin::Clickable is a plugin for TT, which allows your to
+    Template::Plugin::Clickable is a plugin for TT, which allows you to
     filter HTMLs clickable.
+
+OPTIONS
+    target
+          [% FILTER clickable target => '_blank' %]
+          [% message.body | html %]
+          [% END %]
+
+        "target" option enables you to set target attribute in A links. none
+        by default.
+
+NOTE
+    If you use this module with "html" filter, you should set this
+    "clickable" module after the "html" filter. Otherwise links will be also
+    escaped and thus broken.
 
 AUTHOR
     Tatsuhiko Miyagawa <miyagawa@bulknews.net>

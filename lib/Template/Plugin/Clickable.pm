@@ -2,7 +2,7 @@ package Template::Plugin::Clickable;
 
 use strict;
 use vars qw($VERSION);
-$VERSION = 0.01;
+$VERSION = 0.02;
 
 require Template::Plugin::Filter;
 use base qw(Template::Plugin::Filter);
@@ -45,17 +45,38 @@ Template::Plugin::Clickable - Make URLs clickable in HTML
 
   [% USE Clickable %]
   [% FILTER clickable %]
-  URL is http://www.template-toolkit.org/
+  URL is http://www.tt2.org/
   [% END %]
 
 this will become:
 
-  URL is <a href="http://www.template-toolkit.org/">http://www.template-toolkit.org/</a>
+  URL is <a href="http://www.tt2.org/">http://www.tt2.org/</a>
 
 =head1 DESCRIPTION
 
-Template::Plugin::Clickable is a plugin for TT, which allows your to
+Template::Plugin::Clickable is a plugin for TT, which allows you to
 filter HTMLs clickable.
+
+=head1 OPTIONS
+
+=over 4
+
+=item target
+
+  [% FILTER clickable target => '_blank' %]
+  [% message.body | html %]
+  [% END %]
+
+C<target> option enables you to set target attribute in A links. none
+by default.
+
+=back
+
+=head1 NOTE
+
+If you use this module with C<html> filter, you should set this
+C<clickable> module B<after> the C<html> filter. Otherwise links will
+be also escaped and thus broken.
 
 =head1 AUTHOR
 
