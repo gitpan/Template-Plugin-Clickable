@@ -1,5 +1,9 @@
 Revision history for Perl extension Template::Plugin::Clickable
 
+0.06  2006-02-20T04:54:28Z
+        - Added supporf of rel="nofollow"
+          (Thanks to Tokuhiro Matsuno)
+
 0.05  Fri Dec 24 04:08:14 JST 2004
 	- Added reference to TagRescue in POD
 	  (Stephen Quinney, Satoshi Tanimoto)

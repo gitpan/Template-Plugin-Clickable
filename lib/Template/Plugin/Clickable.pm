@@ -1,8 +1,7 @@
 package Template::Plugin::Clickable;
 
 use strict;
-use vars qw($VERSION);
-$VERSION = 0.05;
+our $VERSION = 0.06;
 
 require Template::Plugin;
 use base qw(Template::Plugin);
@@ -32,7 +31,8 @@ sub filter_factory {
 		sub {
 		    my($uri, $orig_uri) = @_;
 		    my $target = $config->{target} ? qq( target="$config->{target}") : '';
-		    return qq(<a href="$uri"$target>$orig_uri</a>);
+                    my $rel    = $config->{rel}    ? qq( rel="$config->{rel}") : '';
+		    return qq(<a href="$uri"$target$rel>$orig_uri</a>);
 		},
 	    );
 	    $finder->find(\$text);
